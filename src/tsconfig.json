@@ -1,4 +1,10 @@
 {
+  "awesomeTypescriptLoaderOptions": {
+    "forkChecker": true,
+    "useWebpackText": true
+  },
+  "buildOnSave": false,
+  "compileOnSave": false,
   "compilerOptions": {
     "declaration": false,
     "emitDecoratorMetadata": true,
@@ -9,6 +15,8 @@
     ],
     "module": "es2015",
     "moduleResolution": "node",
+    "noEmitOnError": false,
+    "noImplicitAny": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "./wwwroot/tsc",

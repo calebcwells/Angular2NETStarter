@@ -1,33 +1,10 @@
 var Path = require('path');
 var Webpack = require('webpack');
+var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 module.exports = ({
-    resolve: {
-        extensions: ['', '.js', '.ts']
-    },
-    module: {
-        loaders: [
-            { test: /\.ts$/, exclude: [/\.(spec|e2e)\.ts$/], loaders: ['awesome-typescript-loader', 'angular2-template-loader'] },
-            { test: /\.html$/, loader: "html" },
-            { test: /\.css/, loader: "style!css" },
-            { test: /\.json$/, loader: 'json-loader' },
-            {
-                test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url?limit=10000&mimetype=application/font-woff"
-            }, {
-                test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url?limit=10000&mimetype=application/font-woff"
-            }, {
-                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url?limit=10000&mimetype=application/octet-stream"
-            }, {
-                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "file"
-            }, {
-                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url?limit=10000&mimetype=image/svg+xml"
-            }]
-    },
+    cache: true,
+    devtool: 'eval',
     entry: {
         main: ['./Client/main.ts']
     },
@@ -36,16 +13,31 @@ module.exports = ({
         filename: '[name].js',
         publicPath: '/dist/'
     },
-    profile: true,
     plugins: [
+        new ForkCheckerPlugin(),
         new Webpack.DllReferencePlugin({
             context: __dirname,
             manifest: require('./wwwroot/dist/vendor-manifest.json')
         }),
         new Webpack.DefinePlugin({
             'process.env': {
-                'ENV': JSON.stringify(process.env.ASPNETCORE_ENVIRONMENT)
+                'CORE': JSON.stringify(process.env.ASPNETCORE_ENVIRONMENT)
             }
         })
-    ]
+    ],
+    module: {
+        loaders: [
+            { test: /\.ts$/, exclude: [/\.(spec|e2e)\.ts$/], loaders: ['awesome-typescript', 'angular2-template'] },
+            { test: /\.html$/, loader: 'html' },
+            { test: /\.css/, loader: 'style!css' },
+            { test: /\.svg$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml' },
+            { test: /\.(jpeg|jpg|gif|png|json)$/, loaders: ["file-loader?name=[name]-[hash:12].[ext]"] }
+        ]
+    },
+    profile: true,
+    resolve: {
+        extensions: ['', '.js', '.ts'],
+        root: Path.resolve(__dirname, 'Client'),
+        modulesDirectories: ['node_modules']
+    }
 });
