@@ -1,5 +1,6 @@
 ﻿{
   "dependencies": {
+    "Microsoft.AspNetCore.AngularServices": "1.0.0-beta-000012",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.1",
     "Microsoft.AspNetCore.Razor.Tools": {
