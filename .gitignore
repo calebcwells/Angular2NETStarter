@@ -28,7 +28,10 @@ bld/
 
 # Visual Studio 2015 cache/options directory
 .vs/
-wwwroot/
+src/wwwroot/*
+!src/wwwroot*
+!src/wwwroot/favicon.ico
+src/wwwroot/dist/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
